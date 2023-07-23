@@ -1,22 +1,33 @@
 'use client'
+import { Fragment, useState } from 'react';
+import { PlusIcon} from '@heroicons/react/20/solid'
 
+import Modal from '@common/Modal';
 
-import endPoints  from '@services/api';
-import useFetch from '@hooks/useFetch';
-
-const PRODUCT_LIMIT = 15;
-const PRODUCT_OFFSET = 15;
-
-
-
-export default function crudProduct() {
-  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET));
-  console.log(products);
-
-
+export default function products() {
+  const [open, setOpen] = useState(false);
+  const [products, setProducts] = useState([]);
 
   return (
     <>
+      <div className="lg:flex lg:items-center lg:justify-between mb-8">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">List of Products</h2>
+        </div>
+        <div className="mt-5 flex lg:mt-0 lg:ml-4">
+          <span className="sm:ml-3">
+            <button
+              type="button"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => setOpen(true)}
+            >
+              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Add Product
+            </button>
+          </span>
+        </div>
+      </div>
+
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -37,16 +48,16 @@ export default function crudProduct() {
                       Id
                     </th>
                     <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">delete</span>
+                      <span className="sr-only">Edit</span>
                     </th>
                     <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
+                      <span className="sr-only">Delete</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {products?.map((product) => (
-                    <tr key={` Product-item-${product.id}`}>
+                    <tr key={`Product-item-${product.id}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
@@ -65,16 +76,15 @@ export default function crudProduct() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="/edit" className="text-red-900 hover:text-red-500" >
-                          Delete
-                        </a>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="/edit" className="text-indigo-600 hover:text-indigo-900">
                           Edit
                         </a>
                       </td>
-                     
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a href="/edit" className="text-indigo-600 hover:text-indigo-900">
+                          Delete
+                        </a>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -83,6 +93,9 @@ export default function crudProduct() {
           </div>
         </div>
       </div>
+      <Modal open={open} setOpen={setOpen}>
+        <h1>Hola Mundo</h1>
+      </Modal>
     </>
   );
 }
