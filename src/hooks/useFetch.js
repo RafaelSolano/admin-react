@@ -18,7 +18,7 @@ const useFetch = (endpoints) => {
       console.log(error);
       
     }
-  })
+  },[])
   return data;
 };
 export default useFetch;
