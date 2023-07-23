@@ -2,9 +2,15 @@
 
 
 import endPoints  from '@services/api';
-import useFetch  from '@hooks/useFetch';
+import useFetch from '@hooks/useFetch';
+
+const PRODUCT_LIMIT = 5;
+const PRODUCT_OFFSET = 5;
+
+
+
 export default function crudProduct() {
-  const products = useFetch(endPoints.products.getProducts(5, 5));
+  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET));
   console.log(products);
 
 
@@ -31,6 +37,9 @@ export default function crudProduct() {
                       Id
                     </th>
                     <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">delete</span>
+                    </th>
+                    <th scope="col" className="relative px-6 py-3">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
@@ -50,17 +59,22 @@ export default function crudProduct() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">{product.category.name}</div>
-                        <div className="text-sm text-gray-500">{product.category.id}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{product.price}</span>
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">${product.price}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a href="/edit" className="text-red-900 hover:text-red-500" >
+                          Delete
+                        </a>
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="/edit" className="text-indigo-600 hover:text-indigo-900">
                           Edit
                         </a>
                       </td>
+                     
                     </tr>
                   ))}
                 </tbody>
