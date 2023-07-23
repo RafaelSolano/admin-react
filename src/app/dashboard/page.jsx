@@ -1,3 +1,4 @@
+'use client'
 const people = [
   {
     name: 'Jane Cooper',
@@ -9,7 +10,15 @@ const people = [
   },
 ];
 
+
+import endPoints  from '@services/api';
+import useFetch  from '@hooks/useFetch';
 export default function Dashboard() {
+  const products = useFetch(endPoints.products.getProducts(5, 5));
+  console.log(products);
+
+
+
   return (
     <>
       <div className="flex flex-col">
