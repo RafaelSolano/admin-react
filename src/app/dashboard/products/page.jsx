@@ -1,13 +1,31 @@
 'use client'
-import { Fragment, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusIcon} from '@heroicons/react/20/solid'
 
 import Modal from '@common/Modal';
 import FormProduct from '@components/FormProduct';
+import axios from 'axios';
 
-export default function products() {
+import endPoints from '@services/api'
+
+export default function Products() {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(endPoints.products.getAllProducts);
+      setProducts(response.data)
+    }
+    try {
+      getProducts();
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+    
+  },[])
 
   return (
     <>
