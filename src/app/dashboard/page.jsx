@@ -12,16 +12,36 @@ const people = [
 
 
 import endPoints  from '@services/api';
-import useFetch  from '@hooks/useFetch';
+import useFetch from '@hooks/useFetch';
+import { Chart } from '@common/Chart';
+
+
+
+
 export default function Dashboard() {
-  const products = useFetch(endPoints.products.getProducts(5, 5));
+  const products = useFetch(endPoints.products.getProducts(15, 15));
   console.log(products);
 
+  const categoryName = products?.map((product) => product.category);
+  const categoryCount = categoryName?.map((category) => category.name);
+  console.log(categoryCount, categoryName)
 
+  const countOcurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev), {});
+  
+  const data = {
+      datasets: [{
+      label: 'Categories',
+      data: countOcurrences(categoryCount),
+      borderWidth: 2,
+      backgroundColor:['#CCCC','#1f1dd2', '#50faf9','#fee332', '#cbbbbb']
+    }]
+  }
 
   return (
     <>
+      
       <div className="flex flex-col">
+      <Chart className="mb-8 mt-2 " chartData={data}/>
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

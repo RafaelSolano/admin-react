@@ -4,8 +4,8 @@
 import endPoints  from '@services/api';
 import useFetch from '@hooks/useFetch';
 
-const PRODUCT_LIMIT = 5;
-const PRODUCT_OFFSET = 5;
+const PRODUCT_LIMIT = 15;
+const PRODUCT_OFFSET = 15;
 
 
 
