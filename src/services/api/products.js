@@ -21,4 +21,16 @@ const deleteProduct = async (id) => {
 }
 
 
-export { addProduct , deleteProduct };
+//Update Product
+const updateProduct = async (id,body) => {
+    const config = {
+        headers: {
+            accept: '*/*', //Permite cualquier petición
+            'Content-Type': 'application/json',
+        },
+    };
+    const response = await axios.put(endPoints.products.updateProducts(id), body, config);
+    return response.data; //data contiene la respuesta delll servidor
+};
+
+export { addProduct , deleteProduct , updateProduct};

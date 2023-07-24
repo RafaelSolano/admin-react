@@ -1,10 +1,12 @@
-import { useRef } from 'react';
-import {addProduct} from '@services/api/products'
+import { cloneElement, useRef } from 'react';
+import { addProduct, updateProduct } from '@services/api/products'
+import { useRouter } from 'next/navigation';
 
 
 
 export default function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
+  const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,7 +18,17 @@ export default function FormProduct({ setOpen, setAlert, product }) {
       categoryId: parseInt(formData.get('category')),
       images: [formData.get('images').name],
     };
-    addProduct(data)
+
+    if (product) {
+      updateProduct(product.id, data)
+        .then((response) => {
+          console.log(response);
+
+        })
+        router.push('/dashboard/products')
+      
+    } else {
+      addProduct(data)
       .then(() => {
         setAlert({
           active: true,
@@ -35,6 +47,10 @@ export default function FormProduct({ setOpen, setAlert, product }) {
         });
       });
   };
+      
+    }
+
+  
 
   return (
     <form ref={formRef} onSubmit={handleSubmit}>
