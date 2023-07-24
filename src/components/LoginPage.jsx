@@ -1,8 +1,9 @@
 'use client'
 import { useRef } from 'react';
 import { useAuth } from '@hooks/useAuth'; // Asegúrate de que la ruta sea correcta
-import { LockClosedIcon } from '@heroicons/react/outline';
+// import { LockClosedIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/navigation';
+import { LockClosedIcon } from '@heroicons/react/24/outline';
 
 export default function LoginPage() {
   const emailRef = useRef(null);
